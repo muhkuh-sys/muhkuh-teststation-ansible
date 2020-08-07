@@ -7,43 +7,26 @@
     ask_pass: True
     ansible_ssh_pass: muhkuh65536
   tasks:
-  - name: disable WiFi hardware
+  - name: disable unneeded hardware
     lineinfile:
       path: /boot/firmware/usercfg.txt
       state: present
-      line: 'dtoverlay=disable-wifi'
-  - name: disable Bluetooth hardware
-    lineinfile:
-      path: /boot/firmware/usercfg.txt
-      state: present
-      line: 'dtoverlay=disable-bt'
-  - name: blank HDMI
-    lineinfile:
-      path: /boot/firmware/usercfg.txt
-      state: present
-      line: 'hdmi_blanking=2'
+      line: '{{ item }}'
+    with_items:
+      - 'dtoverlay=disable-wifi'
+      - 'dtoverlay=disable-bt'
+      - 'hdmi_blanking=2'
 
-  - name: disable WiFi module brcmfmac
+  - name: blacklist unwanted modules
     kernel_blacklist:
       blacklist_file: /etc/modprobe.d/raspi-blacklist.conf
-      name: brcmfmac
+      name: '{{ item }}'
       state: present
-  - name: disable WiFi module brcmutil
-    kernel_blacklist:
-      blacklist_file: /etc/modprobe.d/raspi-blacklist.conf
-      name: brcmutil
-      state: present
-
-  - name: disable Bluetooth module bluetooth
-    kernel_blacklist:
-      blacklist_file: /etc/modprobe.d/raspi-blacklist.conf
-      name: bluetooth
-      state: present
-  - name: disable Bluetooth module btsdio
-    kernel_blacklist:
-      blacklist_file: /etc/modprobe.d/raspi-blacklist.conf
-      name: btsdio
-      state: present
+    with_items:
+      - 'brcmfmac'
+      - 'brcmutil'
+      - 'bluetooth'
+      - 'btsdio'
 
   - name: uninstall unwanted packets
     apt:
