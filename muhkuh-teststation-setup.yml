@@ -1,6 +1,6 @@
 ---
 - hosts: FreshlyInstalledBoards
-  remote_user: ubuntu
+  remote_user: muhkuh
   become: yes
   become_user: root
   vars:
