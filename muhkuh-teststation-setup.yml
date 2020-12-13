@@ -46,6 +46,12 @@
       enabled: no
       state: stopped
 
+  - name: Disable the IP announcer
+    systemd:
+      name: announce_ip.service
+      enabled: no
+      state: stopped
+
   - name: limit the journal
     ini_file:
       path: /etc/systemd/journald.conf
