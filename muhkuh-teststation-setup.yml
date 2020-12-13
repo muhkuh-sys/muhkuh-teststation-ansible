@@ -22,6 +22,8 @@
       - 'dtoverlay=disable-wifi'
       - 'dtoverlay=disable-bt'
       - 'hdmi_blanking=2'
+      - 'disable_splash=1'
+      - 'boot_delay=0'
 
   - name: blacklist unwanted modules
     kernel_blacklist:
