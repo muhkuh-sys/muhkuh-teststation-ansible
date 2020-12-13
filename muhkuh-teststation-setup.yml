@@ -6,6 +6,12 @@
   vars:
     ask_pass: True
     ansible_ssh_pass: muhkuh65536
+  vars_prompt:
+  - name: cfg_hostname
+    prompt: 'Please enter the hostname of the new flash station'
+    private: no
+    when: cfg_hostname is undefined
+
   tasks:
   - name: disable unneeded hardware
     lineinfile:
@@ -63,3 +69,7 @@
       name: ready_led.service
       enabled: yes
       masked: no
+
+  - name: set the new hostname
+    hostname:
+      name: "{{ cfg_hostname }}"
