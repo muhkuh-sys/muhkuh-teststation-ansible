@@ -87,3 +87,19 @@
       owner: root
       group: root
       mode: '0644'
+
+  - name: Install the WebUI.
+    unarchive:
+      src: https://github.com/muhkuh-sys/org.muhkuh.tools-webui/releases/download/v0.0.1/webui-0.0.1-ubuntu-20.04_arm64.tar.gz
+      dest: /opt/
+      remote_src: yes
+  - name: Install the WebUI service file
+    copy:
+      src: /opt/webui-0.0.1/systemd/muhkuh_webui.service
+      dest: /lib/systemd/system/
+      remote_src: yes
+  - name: Enable the WebUI service
+    systemd:
+      name: muhkuh_webui.service
+      enabled: yes
+      masked: no
