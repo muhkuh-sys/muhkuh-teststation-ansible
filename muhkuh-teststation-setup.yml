@@ -36,7 +36,7 @@
 
   - name: uninstall unwanted packets
     apt:
-      name: landscape-common, pastebinit, plymouth, snapd, unattended-upgrades
+      name: landscape-common, pastebinit, plymouth, snapd, unattended-upgrades, cloud-init
       state: absent
       purge: yes
 
