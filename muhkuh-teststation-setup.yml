@@ -42,17 +42,16 @@
       state: absent
       purge: yes
 
-  - name: Disable the apt-daily timer
+  - name: Disable unwanted services.
     systemd:
-      name: apt-daily.timer
+      name: '{{ item }}'
       enabled: no
       state: stopped
-
-  - name: Disable the IP announcer
-    systemd:
-      name: announce_ip.service
-      enabled: no
-      state: stopped
+    with_items:
+      - 'apt-daily.timer'
+      - 'announce_ip.service'
+      - 'wpa_supplicant.service'
+      - 'accounts-daemon.service'
 
   - name: limit the journal
     ini_file:
