@@ -1,0 +1,42 @@
+#-----------------------------------------------------------------------------
+#
+# misc USB rules
+# file version 0.2.0
+SUBSYSTEM!="usb", GOTO="misc_internal_usb_rules_end"
+ENV{DEVTYPE}!="usb_device", GOTO="misc_internal_usb_rules_end"
+
+#EVAL BOARDS
+#-----------
+# add here new rules, THose will be moved during the flasher tests into the file 40-hilscher-misc.rules
+
+# NXEB 90-ST (untested)
+#ATTRS{idVendor}=="1939", ATTRS{idProduct}=="002d", MODE="664", GROUP="plugdev"
+#ATTRS{idVendor}=="1939", ATTRS{idProduct}=="002d", MODE="664", GROUP="plugdev", RUN+="/sbin/modprobe ftdi-sio", RUN+="/bin/sh -c 'echo 1939 002d > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
+
+
+#ACCESSORIES
+#-----------
+# NXIO_Cert Test
+ATTRS{idVendor}=="1939", ATTRS{idProduct}=="1234", MODE="664", GROUP="plugdev"
+
+# NXHX-FTDI
+ATTRS{idVendor}=="1939", ATTRS{idProduct}=="0021", MODE="664", GROUP="plugdev"
+
+# NXHX-SDRSPM
+ATTRS{idVendor}=="1939", ATTRS{idProduct}=="002e", MODE="664", GROUP="plugdev"
+
+# Hilscher Papa Schlumpf board
+ACTION=="add", ATTRS{idVendor}=="1939", ATTRS{idProduct}=="0028", MODE="664", GROUP="plugdev"
+
+# Hilscher COCO (Color Controller)
+ATTRS{idVendor}=="1939", ATTRS{idProduct}=="0024", MODE="664", GROUP="plugdev"
+
+# Disable the tty interface of a default FTDI-Device. This would then not appear in the falsher list.
+# uncomment before use ;)
+# SUBSYSTEM=="usb", DRIVER=="ftdi_sio", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", RUN+="/bin/sh -c 'echo $kernel > /sys/bus/usb/drivers/ftdi_sio/unbind'"
+
+
+LABEL="misc_internal_usb_rules_end"
+
+# changelog
+# 0.1.0 split files into misc and misc-internal

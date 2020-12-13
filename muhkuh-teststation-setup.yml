@@ -79,3 +79,11 @@
   - name: set the new hostname
     hostname:
       name: "{{ cfg_hostname }}"
+
+  - name: Install the UDEV rules.
+    copy:
+      src: data/etc/udev/rules.d/
+      dest: /etc/udev/rules.d/
+      owner: root
+      group: root
+      mode: '0644'
